@@ -1,26 +1,5 @@
 <?php
 ini_set('default_charset', 'UTF-8');
-mysql_connect('localhost','root','') or die(mysql_error());
-mysql_select_db('pract') or die(mysql_error());
-if($_SERVER['REQUEST_METHOD']=="POST"){
-  $uLogin = $_POST['uLogin'];
-  $uPass = $_POST['uPass'];
-  $Pass2 = $_POST['Pass2'];
-  $uName = $_POST['uName'];
-  $uMail = $_POST['uMail'];
-    if ($uPass == $Pass2) {
-      $sql = "INSERT into users(uLogin, uPass, uName, uMail)
-                VALUES('$uLogin' ,'$uPass' ,'$uName' ,'$uMail')";
-      mysql_query($sql) or die(mysql_error());//отправка запроса
-      mysql_close();
-      mail("$uMail", "Подтверждение регистрации", $message); 
-      header("Location: index.php");//переадресация на главную страницу
-    }
-    else
-      header("Location: registration.php");//переадресация на главную страницу
-  
- 
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +24,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     <center><a href="index.php"><img src="images/logo.png" alt=""></a></center>
     <div class="col-sm-4 col-sm-offset-4" style="border:1px solid #537B53; padding:20px; background-color:rgba(123, 146, 99, 0.24);">
       <center>
-        <form method="post" action="registration.php" name="register_frm">
+        <form method="post" action="registration_php.php" name="register_frm">
           <fieldset>
             <table class="formatTable" style="width:100%">
               <tr>             

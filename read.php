@@ -1,12 +1,5 @@
 <?php
-session_start();
-ini_set('default_charset', 'UTF-8');
-mysql_connect('localhost','root','') or die(mysql_error());
-mysql_select_db('pract') or die(mysql_error());
-$id = $_GET['id'];
-$sql = "SELECT * FROM blog WHERE uID='$id' ";
-  $blogers = mysql_query($sql) or die(mysql_error());
-
+include "read_php.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +12,7 @@ $sql = "SELECT * FROM blog WHERE uID='$id' ";
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script type="text/javascript"  src="js/script.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -71,6 +65,35 @@ $sql = "SELECT * FROM blog WHERE uID='$id' ";
         </div>
       </div>
       </div>
+      <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <?php 
+          while($value = mysql_fetch_array($coment)) {
+            echo "<p>".$value['comm']."</p>";
+            echo "<p style='text-align:right;border-top:1px solid #fff;'><b>".$value['name']."</b>    ".$value['dates']."</p>";
+          }
+        ?>
+      </div>
+      </div>
+      <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+          <form action="add_com.php" method="post" id="form_content" enctype='multipart/form-data'>
+            <?php echo '<input type="hidden" value="'.$id.'" name="id">' ?>
+            <textarea id="area_id" class="form-control" rows="3" name="cont"onselect='savesel(this)' onchange='savesel(this)' onclick='savesel(this)' onfocus='savesel(this)' onkeyup='savesel(this)'></textarea><br/>
+
+                  <p>Редактирование текста</p>
+                  <div class="btn btn-primary" onclick="click_bb('area_id', 'b');">B</div>
+                  <div class="btn btn-primary" onclick="click_bb('area_id', 'i');">i</div>
+                  <div class="btn btn-primary" onclick="click_bb('area_id', 'sub');">Нижний индекс</div>
+                  <div class="btn btn-primary" onclick="click_bb('area_id', 'sup');">Верхний индекс</div>
+                  <div class="btn btn-primary" onclick="click_bb2('area_id', 'span style=text-transform:uppercase');">Заглавные </div>
+                  <div class="btn btn-primary" onclick="click_bb2('area_id', 'span style=color:red');">Красный</div>
+<br><br>
+              <button type="submit" class="btn btn-primary" id="cont_add">Save changes</button>
+
+      </form>
+      </div>
+      </div>  
       <?php
     }
 ?>
@@ -78,47 +101,7 @@ $sql = "SELECT * FROM blog WHERE uID='$id' ";
       </div>
       <div class="col-md-3">
         <div class="row">
-              <hr>
-               
-              <?php
-               if(isset($_SESSION['uLogin'])){
-                  ?>
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                    Написать
-                  </button>
-
-                  <!-- Modal -->
-                  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <form action="index.php" method="post" id="form_content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title" id="myModalLabel">Написать</h4>
-                        </div>
-                        <div class="modal-body">
-                          
-                            <input name="theme" placeholder="Тема"  size="20" type="text" class=" form-control"><br> 
-                              <textarea id="cont" class="form-control" rows="3" name="cont"></textarea><br/>
-                              <input type="file" name="bimg">
-                              
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-primary" id="cont_add">Save changes</button>
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                  </form>
-                      </div>
-                    </div>
-                  </div>
-              
-               <?php
-                }
-               ?>
-          </div>
-
-        <div class="col-md-3">
+        
               <center>
                 <?php
                   if ( $_SESSION['chek']==true) {   

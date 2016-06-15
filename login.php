@@ -1,26 +1,6 @@
 <?php
 session_start();
 ini_set('default_charset', 'UTF-8');
-mysql_connect('localhost','root','') or die(mysql_error());
-mysql_select_db('pract') or die(mysql_error());
-if($_SERVER['REQUEST_METHOD']=="POST"){
-  $uLogin = $_POST['uLogin'];
-  $uPass = $_POST['uPass'];
-  $sql = "SELECT uLogin, uPass, uName FROM users where uLogin = '$uLogin' and uPass = '$uPass'";
-  $res = mysql_query($sql) or die(mysql_error());
-  $user = mysql_fetch_assoc($res);
-  if($user['uLogin'] == $uLogin){
-    $_SESSION['uLogin'] = $user['uLogin'];
-    $_SESSION['uName'] = $user['uName'];
-    $_SESSION['chek'] = true;
-    header("Location: index.php");
-  }
-  else {
-    $_SESSION['chek'] = false;
-    echo "Данные введенны не верно";
-  }
- 
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +25,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     <center><a href="index.php"><img src="images/logo.png" alt=""></a></center>
     <div class="col-sm-4 col-sm-offset-4" style="border:1px solid #537B53; padding:20px; background-color:rgba(123, 146, 99, 0.24);">
       <center>
-        <form method="post" action="login.php" name="register_frm">
+        <form method="post" action="login_php.php" name="register_frm">
           <fieldset>
             <table class="formatTable" style="width:100%">
               <tr>             
