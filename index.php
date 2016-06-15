@@ -20,10 +20,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
      // из временной директории в конечную
      move_uploaded_file($_FILES["filename"]["tmp_name"], "images/".$_FILES["filename"]['name']);
      $fname = $_FILES["filename"]['name'];
-   } else {
-      echo("Ошибка загрузки файла");
-      exit();
-   }
+   } 
   };
   $cont = $_POST['cont'];
   $theme = $_POST['theme'];
@@ -62,6 +59,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript"  src="js/script.js"></script>
   </head>
   <body style="background-color: #EFEAF5;">
     <div class="container">
@@ -81,10 +79,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <p>
           <?php
             if ($value['bimg']) {
+              echo '<a href="read.php?id='.$value["uID"].'" style="text-decoration:none;">';
               echo '<img src="images/'.$value['bimg'].'" width=700>';
+              echo "</a>";
             }
             else 
-              echo '<img src="images/default.jpeg" width=700>';
+            {
+                echo '<a href="read.php?id='.$value["uID"].'" style="text-decoration:none;">';
+                echo '<img src="images/default.jpeg" width=700>';
+                echo "</a>";
+            }
+             
             $s = file("file/".$value['bfile'].".txt");
             $ff = "";
             foreach ($s as $val) {
@@ -129,9 +134,18 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         </div>
                         <div class="modal-body">
                           
+
                             <input name="theme" placeholder="Тема"  size="20" type="text" class=" form-control"><br> 
-                              <textarea id="cont" class="form-control" rows="3" name="cont"></textarea><br/>
+                              <textarea id="area_id" class="form-control" rows="3" name="cont"onselect='savesel(this)' onchange='savesel(this)' onclick='savesel(this)' onfocus='savesel(this)' onkeyup='savesel(this)'></textarea><br/>
                               <input type="file" name="filename">
+
+                              <p>Редактирование текста</p>
+                              <div class="btn btn-primary" onclick="click_bb('area_id', 'b');">B</div>
+                              <div class="btn btn-primary" onclick="click_bb('area_id', 'i');">i</div>
+                              <div class="btn btn-primary" onclick="click_bb('area_id', 'sub');">Нижний индекс</div>
+                              <div class="btn btn-primary" onclick="click_bb('area_id', 'sup');">Верхний индекс</div>
+                              <div class="btn btn-primary" onclick="click_bb2('area_id', 'span style=text-transform:uppercase');">Заглавные </div>
+                              <div class="btn btn-primary" onclick="click_bb2('area_id', 'span style=color:red');">Красный</div>
                               
                         </div>
                         <div class="modal-footer">
